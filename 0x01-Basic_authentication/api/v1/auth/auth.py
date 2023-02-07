@@ -12,7 +12,7 @@ class Auth:
         if path is None or excluded_paths is None or excluded_paths == []:
             return True
         for paths in excluded_paths:
-            if path.startwith(paths):
+            if path.startswith(paths):
                 return False
             if paths[-1] == '*':
                 if path.startswith(paths[:-1]):
