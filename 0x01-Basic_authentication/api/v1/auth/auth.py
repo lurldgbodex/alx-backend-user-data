@@ -12,11 +12,12 @@ class Auth:
         if path is None or excluded_paths is None or excluded_paths == []:
             return True
         for paths in excluded_paths:
-            if path.startswith(paths):
+            if path.startswith(paths) or paths.startswith(path):
                 return False
             if paths[-1] == '*':
                 if path.startswith(paths[:-1]):
                     return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         ''' Auth public method that returns authorization header'''
