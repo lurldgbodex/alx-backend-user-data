@@ -11,9 +11,11 @@ class SessionExpAuth(SessionAuth):
     def __init__(self):
         '''class constructor for SessionExpAuth'''
         try:
-            self.session_duration = int(getenv('SESSION_DURATION'))
+            session_duration = int(getenv('SESSION_DURATION'))
         except Exception:
-            self.session_duration = 0
+            session_duration = 0
+
+        self.session_duration = session_duration
 
     def create_session(self, user_id=None):
         '''create session id for user'''
@@ -22,7 +24,7 @@ class SessionExpAuth(SessionAuth):
             return None
         session_dictionary = {
                 'user_id': user_id,
-                'create_at': datetime.now()
+                'created_at': datetime.now()
                 }
         self.user_id_by_session_id[session_id] = session_dictionary
         return session_id
@@ -31,7 +33,7 @@ class SessionExpAuth(SessionAuth):
         '''retrieves user_id from a session'''
         if session_id is None:
             return None
-        if session_id not in user_id_by_session_id:
+        if session_id not in self.user_id_by_session_id:
             return None
         session_dictionary = self.user_id_by_session_id.get(session_id)
         if session_dictionary is None:
