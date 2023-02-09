@@ -30,7 +30,7 @@ elif AUTH_TYPE == 'session_auth':
 elif AUTH_TYPE == 'session_exp_auth':
     auth = SessionExpAuth()
 elif AUTH_TYPE == 'session_db_auth':
-    auth - SessionDBAuth()
+    auth = SessionDBAuth()
 
 
 @app.before_request
