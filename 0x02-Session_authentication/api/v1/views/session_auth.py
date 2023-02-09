@@ -35,7 +35,7 @@ def handle_session_authentication_login():
 @a_v.route('/auth_session/logout', methods=['DELETE'], strict_slashes=False)
 def handle_session_authentication_logout():
     '''handle session auth logout'''
-    is_destroyed = auth.destroy_session(request)
+    destroyed = auth.destroy_session(request)
     if not destroyed:
         abort(404)
     return jsonify({}), 200
