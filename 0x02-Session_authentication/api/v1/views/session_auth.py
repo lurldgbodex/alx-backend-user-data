@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 '''session authentication module'''
 
-from api.v1.views import app_views
+from api.v1.views import app_views as a_v
 from flask import jsonify, abort, request
 from models.user import User
 import os
+from api.v1.app import auth
 
 
-@app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
-def handle_session_authentication():
+@a_v.route('/auth_session/login', methods=['POST'], strict_slashes=False)
+def handle_session_authentication_login():
     '''a post method that handles all routes for session authentication'''
     email = request.form.get('email')
     password = request.form.get('password')
@@ -29,3 +30,12 @@ def handle_session_authentication():
         response.set_cookie(cookie_name, session_id)
         return response
     return jsonify({'error': 'wrong password'}), 401
+
+
+@a_v.route('/auth_session/logout', methods=['DELETE'], strict_slashes=False)
+def handle_session_authentication_logout():
+    '''handle session auth logout'''
+    is_destroyed = auth.destroy_session(request)
+    if not destroyed:
+        abort(404)
+    return jsonify({}), 200
