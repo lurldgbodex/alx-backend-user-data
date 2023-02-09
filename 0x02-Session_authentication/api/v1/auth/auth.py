@@ -28,7 +28,7 @@ class Auth:
         return request.headers.get('Authorization', None)
 
     def current_user(self, request=None) -> TypeVar('User'):
-        '''Atho method that returns current user'''
+        '''Auth method that returns current user'''
         return None
 
     def session_cookie(self, request=None):
