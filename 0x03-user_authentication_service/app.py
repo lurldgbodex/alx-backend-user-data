@@ -9,7 +9,7 @@ app = Flask(__name__)
 Auth = Auth()
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index() -> str:
     '''return a Json payload'''
     return jsonify({
@@ -38,17 +38,17 @@ def post_user() -> str:
 @app.route('/sessions', methods=['POST'])
 def login() -> str:
     '''respond to the POST /sessions route'''
-        email = requests.form.get('email')
-        password = requests.form.get('password')
-        if not AUTH.valid_login(email, password):
-            abort(401)
-        session_id = AUTH.create_session(email)
-        res = jsonify({
-            "email": email,
-            "message": "logged in"
-        })
-        res.set_cookie("session_id", session_id)
-        return res
+    email = requests.form.get('email')
+    password = requests.form.get('password')
+    if not AUTH.valid_login(email, password):
+        abort(401)
+    session_id = AUTH.create_session(email)
+    res = jsonify({
+        "email": email,
+        "message": "logged in"
+    })
+    res.set_cookie("session_id", session_id)
+    return res
 
 
 @app.route('/sessions', methods=['DELETE'])
