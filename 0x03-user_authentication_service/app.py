@@ -11,9 +11,9 @@ Auth = Auth()
 
 @app.route('/')
 def index() -> str:
-    '''home page'''
+    '''return a Json payload'''
     return jsonify({
-        'message': 'Bienvenue'
+        "message": "Bienvenue"
     })
 
 
@@ -25,12 +25,12 @@ def post_user() -> str:
         password = request.form.get('password')
         user = Auth.register_user(email, password)
         return jsonify({
-            'email': email,
-            'message': 'user created'
+            "email": email,
+            "message": "user created"
         })
     except ValueError:
         return jsonify({
-            'message': 'email already registered'
+            "message": "email already registered"
         }), 400
     except
 
@@ -38,26 +38,23 @@ def post_user() -> str:
 @app.route('/sessions', methods=['POST'])
 def login() -> str:
     '''respond to the POST /sessions route'''
-    try:
         email = requests.form.get('email')
         password = requests.form.get('password')
         if not AUTH.valid_login(email, password):
             abort(401)
         session_id = AUTH.create_session(email)
         res = jsonify({
-            'email': email,
-            'message': 'logged in'
+            "email": email,
+            "message": "logged in"
         })
-        res.set_cookie('session_id', session_id)
+        res.set_cookie("session_id", session_id)
         return res
-    except Exception:
-        pass
 
 
 @app.route('/sessions', methods=['DELETE'])
 def logout() -> str:
     '''deletes session and redirects to home route'''
-    session_id = request.cookies.get('session_id')
+    session_id = request.cookies.get("session_id")
     user = AUTH.get_user_from_session_id(session_id)
     if not user:
         abort(403)
@@ -73,7 +70,7 @@ def get_profile() -> str:
     if not user:
         abort(403)
     return jsonify({
-        'email': user.email
+        "email": user.email
     })
 
 
@@ -85,8 +82,8 @@ def reset_password() -> str:
     try:
         reset_token = AUTH.get_reset_password_token(email)
         return jsonify({
-            'email': email,
-            'reset_token': reset_token
+            "email": email,
+            "reset_token": reset_token
         }), 200
     except ValueError:
         abort(403)
@@ -101,8 +98,8 @@ def update_password() -> str:
     try:
         AUTH.update_password(reset_token, new_password)
         return jsonify({
-            'email': email,
-            'message': 'Password updated'
+            "email": email,
+            "message": "Password updated"
         }), 200
     except ValueError:
         abort(403)
