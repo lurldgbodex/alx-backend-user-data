@@ -32,7 +32,7 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email, hashed_password):
+    def add_user(self, email: str, hashed_password: str) -> str:
         '''add_user method'''
         try:
             user = User(email=email, hashed_password=hashed_password)
@@ -43,7 +43,7 @@ class DB:
             user = None
         return user
 
-    def find_user_by(self, **kwargs):
+    def find_user_by(self, **kwargs) -> User:
         '''takes in arbitrary keyword arguments
         returns first row found in the users tables
         filterd by method's imput arguments'''
