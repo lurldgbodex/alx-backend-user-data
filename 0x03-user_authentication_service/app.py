@@ -23,7 +23,7 @@ def post_user() -> str:
     try:
         email = request.form.get('email')
         password = request.form.get('password')
-        user = AUTH.register_user(email, password)
+        AUTH.register_user(email, password)
         return jsonify({
             "email": email,
             "message": "user created"
